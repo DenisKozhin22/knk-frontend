@@ -11,7 +11,7 @@ export interface AuthState {
 	setUser: (user: User) => void
 	logout: () => void
 	hasRefreshToken: () => boolean
-	// initUser: () => Promise<void>
+	setIsLoading: (isLoading: boolean) => void
 }
 
 export const useAuthStore = create<AuthState>(set => ({
@@ -27,8 +27,11 @@ export const useAuthStore = create<AuthState>(set => ({
 		TokenService.removeTokens()
 
 		set({ user: null, isAuth: false })
-	}
+	},
+
+	setIsLoading: (isLoading: boolean) => set({ isLoading })
 }))
 
 export const useUser = () => useAuthStore(state => state.user)
 export const useIsLoadingUser = () => useAuthStore(state => state.isLoading)
+export const useSetIsLoadingUser = () => useAuthStore(state => state.setIsLoading)
